@@ -13,6 +13,9 @@ server.use(express.urlencoded());
 const userRoute = require("./api/routes/userRoute");
 userRoute(server);
 
+const votingSessionRoute = require("./api/routes/votingSessionRoute");
+votingSessionRoute(server);
+
 server.listen(port, hostname, () => {
     console.log(`Server running at http://${hostname}:${port}/`);
 });

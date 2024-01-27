@@ -47,3 +47,13 @@ exports.userLogin = async (req, res) => {
         res.status(500).json({message: "Une erreur s'est produite lors du traitement"});
     }
 };
+
+exports.userGetAll = async (req, res) => {
+    try {
+        let users = await User.find();
+        res.status(200).json(users);
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({message: "Une erreur s'est produite lors du traitement"});
+    }
+}
