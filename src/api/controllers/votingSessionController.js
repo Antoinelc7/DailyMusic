@@ -4,14 +4,30 @@ exports.createSession = async (req, res) => {
     try {
         let newSession = new VotingSession({
             ...req.body,
-            expiration_date: new Date(Date.now() + 3600000),
+            // expiration_date: new Date(Date.now() + 30 * 1000) // set la date à 30s après sa création pour test
+            expiration_date: new Date(Date.now() + 7 * 60 * 60 * 1000) //exprimé en millisecondes, 7h après la création
         });
 
-        let session = await newSession.save();
-        res.status(201).json({message: `Session crée: ${session.module_name}`})
+        const savedSession = await newSession.save();
+
+        // Planifier la suppression après la période spécifiée par la date d'expiration
+        const now = new Date();
+        const delay = savedSession.expiration_date - now;
+
+        setTimeout(async () => {
+            try {
+                // Supprimer la session après la période spécifiée par la date d'expiration
+                await VotingSession.deleteOne({ _id: savedSession._id });
+                console.log(`Session n°${savedSession._id} supprimée automatiquement.`);
+            } catch (error) {
+                console.error(`Erreur lors de la suppression automatique de la session n°${savedSession._id}: ${error.message}`);
+            }
+        }, delay);
+
+        res.status(201).json({ message: `Session créée: ${savedSession.module_name}` });
     } catch (error) {
-        console.log(error);
-        res.status(401).json({message: "Requête invalide"});
+        console.error(error);
+        res.status(401).json({ message: "Requête invalide" });
     }
 };
 
