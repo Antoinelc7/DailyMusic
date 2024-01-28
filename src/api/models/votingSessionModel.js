@@ -13,7 +13,7 @@ let VotingSessionSchema = new Schema({
     musics: {
         type: Array,
         required: true
-    },
+    }
 });
 
 module.exports = mongoose.model('VotingSession', VotingSessionSchema);

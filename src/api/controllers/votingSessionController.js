@@ -4,8 +4,8 @@ exports.createSession = async (req, res) => {
     try {
         let newSession = new VotingSession({
             ...req.body,
-            // expiration_date: new Date(Date.now() + 30 * 1000) // set la date à 30s après sa création pour test
             expiration_date: new Date(Date.now() + 7 * 60 * 60 * 1000) //exprimé en millisecondes, 7h après la création
+            // expiration_date: new Date(Date.now() + 30 * 1000) // set la date à 30s après sa création pour test
         });
 
         const savedSession = await newSession.save();
