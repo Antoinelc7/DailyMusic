@@ -16,6 +16,9 @@ userRoute(server);
 const votingSessionRoute = require("./api/routes/votingSessionRoute");
 votingSessionRoute(server);
 
+const voteRoute = require("./api/routes/voteRoute");
+voteRoute(server);
+
 server.listen(port, hostname, () => {
     console.log(`Server running at http://${hostname}:${port}/`);
 });
