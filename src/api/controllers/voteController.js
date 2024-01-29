@@ -17,7 +17,8 @@ exports.createVote = async (req, res) => {
         const newVote = new Vote({
             ...req.body,
             user_id: userId,
-            session_id: sessionId
+            session_id: sessionId,
+            voters: [userId]
         });
 
         // Enregistrer le vote dans la base de données
@@ -42,10 +43,22 @@ exports.updateVote = async (req, res) => {
             return res.status(404).json({ message: "Vote non trouvé." });
         }
 
-        // Mettre à jour le score
-        if (req.body.score != null) {
-            existingVote.score = req.body.score;
-        }
+// Vérifier si l'utilisateur a déjà voté
+const userHasVoted = existingVote.voters.includes(userId);
+
+// Si l'utilisateur a déjà voté, renvoyer un message d'erreur
+if (userHasVoted) {
+    return res.status(400).json({ message: "Vous avez déjà voté pour cette musique." });
+}
+
+// Mettre à jour le score
+if (req.body.upvote && !userHasVoted) {
+    existingVote.score++;
+    existingVote.voters.push(userId);  // Ajouter l'utilisateur à la liste des votants
+} else if (req.body.downvote && !userHasVoted) {
+    existingVote.score--;
+    existingVote.voters.push(userId);  // Ajouter l'utilisateur à la liste des votants
+}
 
         // Mettre à jour d'autres propriétés si l'utilisateur est le créateur ou un admin
         if (userId == existingVote.user_id || req.userData.role ) {

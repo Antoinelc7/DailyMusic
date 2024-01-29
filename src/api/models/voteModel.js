@@ -32,7 +32,11 @@ let voteSchema = new Schema({
         type: Date,
         default: Date.now,
         required: true
-    }
+    },
+    voters: [{
+        type: Schema.Types.ObjectId,
+        ref: 'User'
+    }]
 })
 
 module.exports = mongoose.model('Vote', voteSchema);
