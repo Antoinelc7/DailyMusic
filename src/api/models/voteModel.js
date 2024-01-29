@@ -7,17 +7,17 @@ let voteSchema = new Schema({
         ref: 'User',
         required: true
     },
-    // music_id: {
-    //     type: Schema.Types.ObjectId,
-    //     ref: 'Music',
-    //     required: true
-    // },
     music_id: {
-        // pour test sans la table music
-        type: Number,
-        default: 0,
+        type: Schema.Types.ObjectId,
+        ref: 'Music',
         required: true
     },
+    // music_id: {
+    //     // pour test sans la table music
+    //     type: Number,
+    //     default: 0,
+    //     required: true
+    // },
     session_id: {
         type: Schema.Types.ObjectId,
         ref: 'VotingSession',

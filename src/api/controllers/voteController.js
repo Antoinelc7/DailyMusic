@@ -37,13 +37,29 @@ exports.updateVote = async (req, res) => {
             userId = req.userData.id;
 
         // Vérifier si le vote existe
-        const existingVote = await Vote.findOne({ _id: voteId, user_id: userId, session_id: sessionId });
+        const existingVote = await Vote.findOne({ _id: voteId, session_id: sessionId });
         if (!existingVote) {
             return res.status(404).json({ message: "Vote non trouvé." });
         }
 
-        // Mettre à jour le vote
-        existingVote.score = req.body.score;
+        // Mettre à jour le score
+        if (req.body.score != null) {
+            existingVote.score = req.body.score;
+        }
+
+        // Mettre à jour d'autres propriétés si l'utilisateur est le créateur ou un admin
+        if (userId == existingVote.user_id || req.userData.role ) {
+            // Vérifier si la requête contient des données pour le contenu autre que le score
+            if (Object.keys(req.body).some(key => key !== 'score')) {
+                // Mettre à jour d'autres propriétés du vote si nécessaire
+                existingVote.music_id = req.body.music_id;
+            }
+        } else {
+            // Si l'utilisateur n'est pas le créateur ou un admin et la requête contient d'autres données, retournez une erreur
+            if (Object.keys(req.body).some(key => key !== 'score')) {
+                return res.status(403).json({ message: "Vous n'avez pas la permission de modifier ce vote." });
+            }
+        }
 
         // Enregistrer la mise à jour dans la base de données
         await existingVote.save();
@@ -54,7 +70,6 @@ exports.updateVote = async (req, res) => {
         res.status(500).json({ message: "Erreur serveur." });
     }
 };
-
 
 // Fonction pour supprimer un vote par son ID
 exports.deleteVote = async (req, res) => {
