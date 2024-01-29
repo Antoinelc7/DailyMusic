@@ -56,4 +56,17 @@ exports.userGetAll = async (req, res) => {
         console.log(error);
         res.status(500).json({message: "Une erreur s'est produite lors du traitement"});
     }
-}
+};
+
+exports.userGetTokenInfos = async (req, res) => {
+    try {
+        // Les informations de l'utilisateur sont déjà ajoutées au req.user par le middleware d'authentification
+        const userInfo = req.userData;
+
+        // Retourner les informations de l'utilisateur
+        res.status(200).json(userInfo);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Une erreur s'est produite lors du traitement." });
+    }
+};
