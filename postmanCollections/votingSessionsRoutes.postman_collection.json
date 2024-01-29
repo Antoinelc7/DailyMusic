@@ -1,0 +1,97 @@
+{
+	"info": {
+		"_postman_id": "b7c63d51-082e-4805-b268-908a8638b8cd",
+		"name": "votingSessionsRoutes",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26968407"
+	},
+	"item": [
+		{
+			"name": "createSession",
+			"request": {
+				"auth": {
+					"type": "inherit"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "module_name",
+							"value": "Test Session 0",
+							"type": "text"
+						},
+						{
+							"key": "musics",
+							"value": "[\"Music1\",\"Music2\",\"Music3\"]",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:3000/votingSession",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"votingSession"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getSessionById",
+			"request": {
+				"auth": {
+					"type": "inherit"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer <token>",
+						"type": "text",
+						"id": 0
+					}
+				],
+				"url": {
+					"raw": "http://localhost:3000/votingSession/:sessionId",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"votingSession",
+						":sessionId"
+					],
+					"variable": [
+						{
+							"key": "sessionId",
+							"value": ""
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getAllSessions",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		}
+	]
+}
