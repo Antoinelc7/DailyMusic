@@ -1,3 +1,27 @@
+/**
+ * @openapi
+ * definitions:
+ *   schemas:
+ *      User:
+ *          type: object
+ *          required:
+ *              - email
+ *              - password
+ *              - role
+ *          properties:
+ *              email:
+ *                  type: string
+ *                  description: L'email de l'utilisateur
+ *                  unique: true
+ *              password:
+ *                  type: string
+ *                  description: Le mot de passe de l'utilisateur
+ *              role:
+ *                  type: boolean
+ *                  default: false
+ *                  description: Le role de l'utilisateur
+ */
+
 module.exports = (server) => {
     const userController = require("../controllers/userController");
 
@@ -7,25 +31,13 @@ module.exports = (server) => {
     *   post:
     *     summary: Enregistre un nouvel utilisateur
     *     tags: [Utilisateurs]
-    *     parameters:
-    *       - in: body
-    *         name: user
+    *     requestBody:
+    *       required: true
+    *       content:
+    *         application/json:
+    *           schema:
+    *             $ref: '#/definitions/schemas/User'
     *         description: Les détails de l'utilisateur
-    *         required: true
-    *         schema:
-    *           type: object
-    *           required:
-    *             - email
-    *             - password
-    *           properties:
-    *             email:
-    *               type: string
-    *               format: email
-    *             password:
-    *               type: string
-    *             role:
-    *               type: boolean
-    *               default: false
     *     responses:
     *       201:
     *         description: Utilisateur enregistré avec succès
@@ -42,23 +54,13 @@ module.exports = (server) => {
     *   post:
     *     summary: Connecte l'utilisateur
     *     tags: [Utilisateurs]
-    *     parameters:
-    *       - in: body
-    *         name: user
+    *     requestBody:
+    *       required: true
+    *       content:
+    *         application/json:
+    *           schema:
+    *             $ref: '#/definitions/schemas/User'
     *         description: Les détails de l'utilisateur
-    *         required: true
-    *         schema:
-    *           type: object
-    *           required:
-    *             - email
-    *             - password
-    *           properties:
-    *             email:
-    *               type: string
-    *               format: email
-    *             password:
-    *               type: string
-
     *     responses:
     *       200:
     *         description: Connexion réussie
