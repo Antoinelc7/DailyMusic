@@ -24,6 +24,11 @@ exports.createVote = async (req, res) => {
         // Enregistrer le vote dans la base de données
         const savedVote = await newVote.save();
 
+        // Récupérer la session à partir de l'ID et push le vote dans le tableau musics de la session désignée
+        const session = await VotingSession.findById(sessionId);
+        session.musics.push({ vote_id: savedVote._id });
+        await session.save();
+
         res.status(201).json({ message: `Vote enregistré avec succès dans la session n°${savedVote.session_id}!` });
     } catch (error) {
         console.error(error);
@@ -43,22 +48,22 @@ exports.updateVote = async (req, res) => {
             return res.status(404).json({ message: "Vote non trouvé." });
         }
 
-// Vérifier si l'utilisateur a déjà voté
-const userHasVoted = existingVote.voters.includes(userId);
+        // Vérifier si l'utilisateur a déjà voté
+        const userHasVoted = existingVote.voters.includes(userId);
 
-// Si l'utilisateur a déjà voté, renvoyer un message d'erreur
-if (userHasVoted) {
-    return res.status(400).json({ message: "Vous avez déjà voté pour cette musique." });
-}
+        // Si l'utilisateur a déjà voté, renvoyer un message d'erreur
+        if (userHasVoted) {
+            return res.status(400).json({ message: "Vous avez déjà voté pour cette musique." });
+        }
 
-// Mettre à jour le score
-if (req.body.upvote && !userHasVoted) {
-    existingVote.score++;
-    existingVote.voters.push(userId);  // Ajouter l'utilisateur à la liste des votants
-} else if (req.body.downvote && !userHasVoted) {
-    existingVote.score--;
-    existingVote.voters.push(userId);  // Ajouter l'utilisateur à la liste des votants
-}
+        // Mettre à jour le score
+        if (req.body.upvote && !userHasVoted) {
+            existingVote.score++;
+            existingVote.voters.push(userId);  // Ajouter l'utilisateur à la liste des votants
+        } else if (req.body.downvote && !userHasVoted) {
+            existingVote.score--;
+            existingVote.voters.push(userId);  // Ajouter l'utilisateur à la liste des votants
+        }
 
         // Mettre à jour d'autres propriétés si l'utilisateur est le créateur ou un admin
         if (userId == existingVote.user_id || req.userData.role ) {
@@ -96,10 +101,24 @@ exports.deleteVote = async (req, res) => {
             return res.status(404).json({ message: "Vote non trouvé." });
         }
 
-        // Supprimer le vote de la base de données
-        await existingVote.remove();
+        if (userId != existingVote.user_id && !req.userData.role ) {
+            return res.status(403).json({ message: "Vous n'avez pas la permission de supprimer ce vote." });
+        }
+        
+        // Charger l'objet de session correspondant à l'ID
+        const session = await VotingSession.findById(sessionId);
+        // Retirer le vote du tableau musics
+        const index = session.musics.findIndex(music => music.vote_id.toString() === voteId);
+        if (index !== -1) {
+            session.musics.splice(index, 1);
+        }
+        // Enregistrer les modifications apportées à l'objet de session
+        await session.save();
 
-        res.status(204).json({ message: "Vote supprimé avec succès." });
+        // Supprimer le vote
+        await Vote.deleteOne({ _id: voteId });
+
+        res.status(200).json({ success: true, message: "Vote supprimé avec succès." });
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: "Erreur serveur." });

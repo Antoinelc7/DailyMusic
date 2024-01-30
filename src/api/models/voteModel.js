@@ -12,12 +12,6 @@ let voteSchema = new Schema({
         ref: 'Music',
         required: true
     },
-    // music_id: {
-    //     // pour test sans la table music
-    //     type: Number,
-    //     default: 0,
-    //     required: true
-    // },
     session_id: {
         type: Schema.Types.ObjectId,
         ref: 'VotingSession',

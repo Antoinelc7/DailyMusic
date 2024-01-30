@@ -51,14 +51,13 @@ exports.getSession = async (req, res) => {
     }
 };
 
-exports.deleteSessions = async (req, res) => {
+exports.deleteSession = async (req, res) => {
     try {
         const deletedSession = await VotingSession.findByIdAndDelete(req.params.sessionId);
         if (!deletedSession) {
-            res.status(404).json({ message: "Session introuvable.." });
-            return;
+            return res.status(404).json({ message: "Session introuvable.." });
         }
-        res.status(204).json({ message: "Session supprimée avec succès!" })
+        res.status(200).json({ message: "Session supprimée avec succès!" })
     } catch (error) {
         console.log(error);
         res.status(500).json({ message: "Erreur serveur." });
