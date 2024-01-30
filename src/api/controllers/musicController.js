@@ -14,16 +14,18 @@ exports.submitMusic = async (req, res) => {
 };
 
 exports.getMusic = async (req, res) => {
-    const { id } = req.params;
+    const { musicId } = req.params;
 
     try {
-        const music = await Music.findById(id);
+        const music = await Music.findById(musicId);
+        if (!music) {
+            return res.status(404).json({ message: "Musique introuvable." });
+        }
         res.status(200).json(music);
     } catch (error) {
-        console.log(error);
-        res.status(404).json({ message: "Musique introuvable." });
+        console.log('Error:', error.message);
+        res.status(500).json({ message: "Erreur du serveur." });
     }
-
 }
 
 exports.getAllMusics = async (req, res) => {

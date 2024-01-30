@@ -108,7 +108,7 @@ exports.deleteVote = async (req, res) => {
         // Charger l'objet de session correspondant à l'ID
         const session = await VotingSession.findById(sessionId);
         // Retirer le vote du tableau musics
-        const index = session.musics.findIndex(music => music.vote_id.toString() === voteId);
+        const index = session.musics.findIndex(music => music && music.vote_id && music.vote_id.toString() === voteId);
         if (index !== -1) {
             session.musics.splice(index, 1);
         }

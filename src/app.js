@@ -30,16 +30,33 @@ server.listen(port, hostname, () => {
 });
 
 const swaggerOptions = {
-    swaggerDefinition: {
-      info: {
-        title: 'DailyMusic API',
-        version: '1.0.0',
-        description: 'DailyMusic API documentation',
-      },
-      servers: ['http://localhost:3000'],
+  swaggerDefinition: {
+    openapi: '3.0.0',
+    info: {
+      title: 'DailyMusic API',
+      version: '1.0.0',
+      description: 'DailyMusic API documentation',
     },
-    apis: ['./api/routes/*.js'],
-  };
+    servers: [
+      {
+        url: 'http://localhost:3000',
+      },
+    ],
+    components: {
+      securitySchemes: {
+        BearerAuth: {
+          type: 'http',
+          scheme: 'bearer',
+          bearerFormat: 'JWT',
+        },
+      },
+    },
+    security: [{
+      BearerAuth: [],
+    }],
+  },
+  apis: ['./api/routes/*.js'],
+};
   
-  const swaggerDocs = swaggerJsDoc(swaggerOptions);
-  server.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+const swaggerDocs = swaggerJsDoc(swaggerOptions);
+server.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
