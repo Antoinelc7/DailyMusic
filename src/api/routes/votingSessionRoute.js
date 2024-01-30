@@ -51,7 +51,7 @@ module.exports = (server) => {
      *       '500':
      *         description: Erreur serveur
      */
-    server.post("/votingSession", auth, votingSessionController.createSession) // Créer une nouvelle session
+    server.post("/votingSession", auth, votingSessionController.createSession)
     
     /**
      * @swagger
