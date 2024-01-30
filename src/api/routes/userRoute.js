@@ -1,6 +1,6 @@
 /**
  * @openapi
- * definitions:
+ * components:
  *   schemas:
  *      User:
  *          type: object
@@ -36,7 +36,7 @@ module.exports = (server) => {
     *       content:
     *         application/json:
     *           schema:
-    *             $ref: '#/definitions/schemas/User'
+    *             $ref: '#/components/schemas/User'
     *         description: Les détails de l'utilisateur
     *     responses:
     *       201:
@@ -59,7 +59,7 @@ module.exports = (server) => {
     *       content:
     *         application/json:
     *           schema:
-    *             $ref: '#/definitions/schemas/User'
+    *             $ref: '#/components/schemas/User'
     *         description: Les détails de l'utilisateur
     *     responses:
     *       200:

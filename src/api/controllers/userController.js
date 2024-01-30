@@ -5,10 +5,6 @@ const bcrypt = require("bcrypt");
 exports.userRegister = async (req, res) => {
     try {
 
-        if (!req.body.password || typeof req.body.password !== 'string') {
-            return res.status(400).json({message: "Invalid password"});
-        }
-
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(req.body.password, salt);
 
