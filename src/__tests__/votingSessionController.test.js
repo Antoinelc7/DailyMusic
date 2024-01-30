@@ -1,5 +1,3 @@
-// votingSessionController.test.js
-
 const VotingSession = require('../api/models/votingSessionModel');
 const votingSessionController = require('../api/controllers/votingSessionController');
 
