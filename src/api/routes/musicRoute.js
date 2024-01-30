@@ -3,5 +3,5 @@ module.exports = (server) => {
     const auth = require("../middlewares/auth");
     server.post("/music/", auth, musicController.submitMusic);
     server.get("/music/", auth, musicController.getAllMusics);
-    server.get("/music/:id", auth, musicController.getMusic);
+    server.get("/music/:musicId", auth, musicController.getMusic);
 }

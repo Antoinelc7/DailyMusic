@@ -25,12 +25,12 @@
 					"urlencoded": [
 						{
 							"key": "module_name",
-							"value": "Test Session 0",
+							"value": "Test Session 1",
 							"type": "text"
 						},
 						{
 							"key": "musics",
-							"value": "[\"Music1\",\"Music2\",\"Music3\"]",
+							"value": "",
 							"type": "text"
 						}
 					]
@@ -50,6 +50,38 @@
 			"response": []
 		},
 		{
+			"name": "deleteSession",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:3000/votingSession/:sessionId",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"votingSession",
+						":sessionId"
+					],
+					"variable": [
+						{
+							"key": "sessionId",
+							"value": ""
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "getSessionById",
 			"request": {
 				"auth": {
@@ -59,9 +91,8 @@
 				"header": [
 					{
 						"key": "Authorization",
-						"value": "Bearer <token>",
-						"type": "text",
-						"id": 0
+						"value": "Bearer {{token}}",
+						"type": "text"
 					}
 				],
 				"url": {
@@ -89,7 +120,24 @@
 			"name": "getAllSessions",
 			"request": {
 				"method": "GET",
-				"header": []
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:3000/votingSession",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"votingSession"
+					]
+				}
 			},
 			"response": []
 		}

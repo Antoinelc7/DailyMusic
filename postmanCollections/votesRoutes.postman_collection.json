@@ -33,11 +33,11 @@
 					}
 				],
 				"body": {
-					"mode": "formdata",
-					"formdata": [
+					"mode": "urlencoded",
+					"urlencoded": [
 						{
 							"key": "music_id",
-							"value": "1",
+							"value": "65b8b6b3b9dc6d83c61f1ae5",
 							"type": "text"
 						}
 					]
@@ -57,7 +57,7 @@
 					"variable": [
 						{
 							"key": "sessionId",
-							"value": "65b67fa7998e3662ca80fff1"
+							"value": "65b8b7a9b9dc6d83c61f1ae7"
 						}
 					]
 				},
@@ -91,12 +91,24 @@
 					}
 				],
 				"body": {
-					"mode": "formdata",
-					"formdata": [
+					"mode": "urlencoded",
+					"urlencoded": [
 						{
 							"key": "music_id",
 							"value": "",
 							"type": "text"
+						},
+						{
+							"key": "upvote",
+							"value": "true",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "downvote",
+							"value": "true",
+							"type": "text",
+							"disabled": true
 						}
 					]
 				},
