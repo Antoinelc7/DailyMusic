@@ -9,16 +9,29 @@ exports.submitMusic = async (req, res) => {
         res.status(201).json(music);
     } catch (error) {
         console.log(error);
-        res.status(400).json({ message: "Music submission failed." });
+        res.status(400).json({ message: "L'envoie de la musique a échoué." });
     }
 };
 
-exports.getMusics = async (req, res) => {
+exports.getMusic = async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        const music = await Music.findById(id);
+        res.status(200).json(music);
+    } catch (error) {
+        console.log(error);
+        res.status(404).json({ message: "Musique introuvable." });
+    }
+
+}
+
+exports.getAllMusics = async (req, res) => {
     try {
         const musics = await Music.find();
         res.status(200).json(musics);
     } catch (error) {
         console.log(error);
-        res.status(404).json({ message: "Musics not found." });
+        res.status(404).json({ message: "Musiques introuvable." });
     }
 };
