@@ -1,4 +1,7 @@
 const express = require('express');
+const swaggerJsDoc = require('swagger-jsdoc');
+const swaggerUi = require('swagger-ui-express');
+
 const hostname = '0.0.0.0';
 const port = '3000';
 
@@ -25,3 +28,18 @@ voteRoute(server);
 server.listen(port, hostname, () => {
     console.log(`Server running at http://${hostname}:${port}/`);
 });
+
+const swaggerOptions = {
+    swaggerDefinition: {
+      info: {
+        title: 'DailyMusic API',
+        version: '1.0.0',
+        description: 'DailyMusic API documentation',
+      },
+      servers: ['http://localhost:3000'],
+    },
+    apis: ['./api/routes/*.js'],
+  };
+  
+  const swaggerDocs = swaggerJsDoc(swaggerOptions);
+  server.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
