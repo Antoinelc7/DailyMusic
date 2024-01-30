@@ -2,6 +2,11 @@ const VotingSession = require('../models/votingSessionModel');
 
 exports.createSession = async (req, res) => {
     try {
+        // Vérifier que req.body contient les données nécessaires
+        if (!req.body || !req.body.module_name) {
+            return res.status(400).json({ message: "Données de session manquantes" });
+        }
+
         let newSession = new VotingSession({
             ...req.body,
             expiration_date: new Date(Date.now() + 7 * 60 * 60 * 1000) //exprimé en millisecondes, 7h après la création

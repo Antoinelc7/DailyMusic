@@ -34,7 +34,7 @@ let VotingSessionSchema = new Schema({
  *           required: true
  *         musics:
  *           type: array
- *           description: La liste des musiques associées à la session de vote.
+ *           description: La liste des votes de musique proposés associées à la session de vote.
  *           required: true
  */
 
