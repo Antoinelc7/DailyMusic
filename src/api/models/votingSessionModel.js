@@ -16,26 +16,4 @@ let VotingSessionSchema = new Schema({
     }
 });
 
-/**
- * @swagger
- * components:
- *   schemas:
- *     VotingSession:
- *       type: object
- *       properties:
- *         module_name:
- *           type: string
- *           description: Le nom du module de la session de vote.
- *           required: true
- *         expiration_date:
- *           type: string
- *           format: date-time
- *           description: La date d'expiration de la session de vote.
- *           required: true
- *         musics:
- *           type: array
- *           description: La liste des musiques associées à la session de vote.
- *           required: true
- */
-
 module.exports = mongoose.model('VotingSession', VotingSessionSchema);
