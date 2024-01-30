@@ -33,34 +33,4 @@ let voteSchema = new Schema({
     }]
 })
 
-/**
- * @swagger
- * components:
- *   schemas:
- *     Vote:
- *       type: object
- *       properties:
- *         user_id:
- *           type: string
- *           description: L'ID de l'utilisateur qui a émis le vote.
- *         music_id:
- *           type: string
- *           description: L'ID de la musique pour laquelle le vote est émis.
- *         session_id:
- *           type: string
- *           description: L'ID de la session de vote à laquelle le vote est associé.
- *         score:
- *           type: number
- *           description: Le score attribué par l'utilisateur.
- *         vote_date:
- *           type: string
- *           format: date-time
- *           description: La date et l'heure auxquelles le vote a été émis.
- *         voters:
- *           type: array
- *           items:
- *             type: string
- *           description: La liste des utilisateurs qui ont émis le vote.
- */
-
 module.exports = mongoose.model('Vote', voteSchema);

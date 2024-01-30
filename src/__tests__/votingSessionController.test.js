@@ -4,13 +4,20 @@ const votingSessionController = require('../api/controllers/votingSessionControl
 // Mocking the VotingSession model methods
 jest.mock('../api/models/votingSessionModel');
 
+// Mock the save method to return a mock session object
+VotingSession.prototype.save = jest.fn().mockResolvedValue({
+  _id: 'mockId',
+  module_name: 'Test session',
+  expiration_date: new Date(Date.now() + 7 * 60 * 60 * 1000),
+  musics: [],
+});
+
 describe('Voting Session Controller', () => {
   afterEach(() => {
     jest.clearAllMocks();
   });
 
-
-
+  
   it('should create a new session', async () => {
     const req = {
       body: {
@@ -32,6 +39,23 @@ describe('Voting Session Controller', () => {
   });
 
 
+  // Mock the find method to return a mock array of sessions
+  VotingSession.find = jest.fn().mockResolvedValue([
+    {
+      _id: 'mockId1',
+      module_name: 'Test session 1',
+      expiration_date: new Date(Date.now() + 7 * 60 * 60 * 1000),
+      musics: [],
+    },
+    {
+      _id: 'mockId2',
+      module_name: 'Test session 2',
+      expiration_date: new Date(Date.now() + 7 * 60 * 60 * 1000),
+      musics: [],
+    },
+  ]);
+
+  // Now, when the find method is called in the getAllSessions function, it will return the above mock array of sessions
 
   it('should get all sessions', async () => {
     const req = {

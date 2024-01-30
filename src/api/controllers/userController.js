@@ -13,7 +13,7 @@ exports.userRegister = async (req, res) => {
         });
 
         let user = await newUser.save();
-        res.status(201).json({message: `Utilisateur crée: ${user.email}`})
+        res.status(201).json({message: `Utilisateur créé: ${user.email}`})
     } catch (error) {
         console.log(error);
         res.status(401).json({message: "Requête invalide"});
