@@ -9,6 +9,9 @@ Before you begin, ensure you have Docker installed on your machine.
 ## Setup
 
 1. Clone the repository to your local machine.
+```
+git clone https://github.com/Antoinelc7/DailyMusic.git
+```
 2. Create a `.env` file in the root directory of your project. Use the `.env.sample` file as a guide for the environment variables you need to set.
 
 ## Launch
